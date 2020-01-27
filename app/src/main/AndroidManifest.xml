@@ -14,14 +14,15 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-
+        <activity android:name=".Teacher.NewAnnouncement"></activity>
+        <activity android:name=".Teacher.AnnouncementActivity" />
+        <activity android:name=".Teacher.TeacherLogin" />
         <activity
             android:name=".TokenActivity"
             android:label="@string/app_name"
+            android:launchMode="singleTask"
             android:screenOrientation="portrait"
-            android:theme="@style/SplashTheme"
-            android:launchMode="singleTask">
-
+            android:theme="@style/SplashTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -36,28 +37,26 @@
                 <data android:scheme="cmsbphc" />
             </intent-filter>
         </activity>
-
         <activity
             android:name=".MainActivity"
             android:label="@string/app_name"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar"
-            >
-
+            android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
-                <action android:name="android.intent.action.VIEW"/>
+                <action android:name="android.intent.action.VIEW" />
+
                 <category android:name="android.intent.category.BROWSABLE" />
-                <category android:name="android.intent.category.DEFAULT"/>
-                <data android:scheme="https" android:host="td.bits-hyderabad.ac.in"
-                    android:pathPrefix="/fileShare" />
+                <category android:name="android.intent.category.DEFAULT" />
+
+                <data
+                    android:host="td.bits-hyderabad.ac.in"
+                    android:pathPrefix="/fileShare"
+                    android:scheme="https" />
             </intent-filter>
-
         </activity>
-
         <activity
             android:name=".CourseDetailActivity"
             android:screenOrientation="portrait" />
-
         <activity
             android:name=".CourseModulesActivity"
             android:screenOrientation="portrait" />
@@ -86,11 +85,9 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="crux.bphc.cms.MainActivity" />
         </activity>
-
         <activity
             android:name=".InfoActivity"
             android:screenOrientation="portrait" />
-
     </application>
 
 </manifest>

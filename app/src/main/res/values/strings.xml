@@ -98,6 +98,12 @@
         <item quantity="other">%d Courses updated</item>
     </plurals>
 
+    <string-array name="teacher_subjects">
+        <item>TEST 1</item>
+        <item>TEST 2</item>
+        <item>TEST 3</item>
+    </string-array>
+
     <string name="upToDate">Everything is up to date</string>
 
 

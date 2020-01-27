@@ -3,13 +3,16 @@ package crux.bphc.cms;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.util.Base64;
+import android.view.View;
+import android.widget.Button;
 import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.gson.Gson;
 
@@ -19,8 +22,10 @@ import java.util.Random;
 
 import app.Constants;
 import app.MyApplication;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import crux.bphc.cms.Teacher.TeacherLogin;
 import helper.APIClient;
 import helper.CourseDataHandler;
 import helper.CourseRequestHandler;
@@ -40,6 +45,8 @@ import set.forum.Discussion;
 
 public class TokenActivity extends AppCompatActivity {
 
+    @BindView(R.id.btTeacher)
+    Button btTeacher;
     private ProgressDialog progressDialog;
     private Toast toast = null;
 
@@ -68,6 +75,20 @@ public class TokenActivity extends AppCompatActivity {
         courseRequestHandler = new CourseRequestHandler(this);
 
         userAccount = new UserAccount(this);
+
+        btTeacher.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //TODO do something here
+                startActivity(new Intent(getApplicationContext(), TeacherLogin.class));
+            }
+        });
+
+        SharedPreferences pref = getApplicationContext().getSharedPreferences("TeacherPref", 0);
+        if (pref.getString("name", null) != null) {
+            startActivity(new Intent(getApplicationContext(), TeacherLogin.class));
+            finish();
+        }
     }
 
     @Override
@@ -77,7 +98,7 @@ public class TokenActivity extends AppCompatActivity {
         Intent intent = getIntent();
         if (intent != null && intent.getAction() == Intent.ACTION_VIEW) {
             Uri data = intent.getData();
-            if (data != null && data.getHost() != null){
+            if (data != null && data.getHost() != null) {
                 String host = data.getHost();
                 String token = host.substring(6);
                 token = new String(Base64.decode(token, Base64.DEFAULT));
@@ -157,8 +178,8 @@ public class TokenActivity extends AppCompatActivity {
             generate a token and redirect the browser to the Uri with specified schema. The browser will create an
             intent that'll launch this activity again.
          */
-        String passport = ((Integer )new Random().nextInt(2000000000)).toString(); // A random number that
-                                                                                          // identifies the request
+        String passport = ((Integer) new Random().nextInt(2000000000)).toString(); // A random number that
+        // identifies the request
         String loginUrl = String.format(Constants.LOGIN_URL, passport);
         Intent intent = new Intent(Intent.ACTION_VIEW);
         intent.setData(Uri.parse(loginUrl));
@@ -172,9 +193,9 @@ public class TokenActivity extends AppCompatActivity {
             progressDialog.hide();
         progressDialog.setMessage(message);
     }
-    
+
     private void dismissProgress() {
-        if(progressDialog.isShowing()) {
+        if (progressDialog.isShowing()) {
             progressDialog.dismiss();
         }
     }
@@ -197,6 +218,7 @@ public class TokenActivity extends AppCompatActivity {
             finish();
         }
     }
+
 
     class CourseDataRetriever extends AsyncTask<Void, Integer, Boolean> {
 
